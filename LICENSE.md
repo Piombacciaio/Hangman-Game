@@ -12,7 +12,6 @@
 
   0. You just DO WHAT THE FUCK YOU WANT TO.
 
-
         0.1. If you use it for a cool project, lmk :)
 
-![](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png)
+![WTFPL logo](http://www.wtfpl.net/wp-content/uploads/2012/12/wtfpl-badge-4.png)
