@@ -1,1 +1,7 @@
 run - debug.bat
+compile.bat
+Icon.ico
+Hangman Game.spec
+Hangman Game.exe
+build
+dist

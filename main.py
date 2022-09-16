@@ -1,4 +1,4 @@
-import colorama, ctypes, re, requests, os
+import colorama, ctypes, json, random, re, requests, os
 from colorama import Fore
 from string import ascii_lowercase
 
@@ -18,11 +18,27 @@ LANGS_DICT = {
 VOWELS = "aeiouy"
 PATTERN = r'^[0-4]$'
 
+def internet_check():
+    try:
+        requests.get("example.com")
+        return True
+    except Exception as e: 
+        return False
 
 def new_game(difficulty, lang):
 
-    word = requests.get(f"https://random-word-api.herokuapp.com/word?lang={LANGS_DICT[lang]}").json()
-    word = str(word[0])
+    if internet_check():
+
+        word = requests.get(f"https://random-word-api.herokuapp.com/word?lang={LANGS_DICT[lang]}").json()
+        word = str(word[0]).lower()
+
+    else:
+
+        with open(f"languages/{LANGS_DICT[lang]}.json", "r") as f:
+            
+            words = json.load(f)
+            word = random.choice(words).lower()
+ 
     lifes = int(len(word) + LIFES_DICT[difficulty])
     known_letters = []
     guessed_letters = []
@@ -34,7 +50,7 @@ def main():
 
     while True:
 
-        print(f"""Please choose one of the following options:\n[{Fore.GREEN}1{Fore.RESET}] - Easy\n[{Fore.GREEN}2{Fore.RESET}] - Medium\n[{Fore.GREEN}3{Fore.RESET}] - Hard\n[{Fore.GREEN}4{Fore.RESET}] - Master\n[{Fore.GREEN}0{Fore.RESET}] - Exit the program""")
+        print(f"""Please choose one of the following options:\n[{Fore.GREEN}1{Fore.RESET}] - Easy (Vowels are marked by "+")\n[{Fore.GREEN}2{Fore.RESET}] - Medium\n[{Fore.GREEN}3{Fore.RESET}] - Hard\n[{Fore.GREEN}4{Fore.RESET}] - Master\n[{Fore.GREEN}0{Fore.RESET}] - Exit the program""")
         difficulty = input(">> ")
 
         if re.match(PATTERN, difficulty):
@@ -43,7 +59,7 @@ def main():
 
                 quit(1)
 
-            print(f"Please choose one of the following languages:\n[{Fore.GREEN}0{Fore.RESET}] - English\n[{Fore.GREEN}1{Fore.RESET}] - Italian\n[{Fore.GREEN}2{Fore.RESET}] - German\n[{Fore.GREEN}3{Fore.RESET}] - Spanish\n[{Fore.GREEN}4{Fore.RESET}] - Chinese")
+            print(f"Please choose one of the following languages:\n[{Fore.GREEN}0{Fore.RESET}] - English\n[{Fore.GREEN}1{Fore.RESET}] - Italian\n[{Fore.GREEN}2{Fore.RESET}] - German\n[{Fore.GREEN}3{Fore.RESET}] - Spanish\n[{Fore.GREEN}4{Fore.RESET}] - Chinese (Chinese keyboard required)")
             language = input(">> ")
 
             if re.match(PATTERN, language):
@@ -69,7 +85,7 @@ def main():
 
                             guessed_phrase += f"{char} "
 
-                    if "-" not in guessed_phrase:
+                    if "-" not in guessed_phrase  and "+" not in guessed_phrase:
 
                         print(f"\n{Fore.GREEN}YOU WON!{Fore.RESET}\nThe word is {word}")
                         break

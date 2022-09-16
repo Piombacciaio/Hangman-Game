@@ -12,5 +12,4 @@ Simple version of the classic hangman game
 
 ## Requirements
 
-- [Python 3.x](https://www.python.org/downloads/)
-- Internet connection
+- [Python 3.x](https://www.python.org/downloads/) (Made with Python [3.9.4](https://www.python.org/downloads/release/python-394/))
