@@ -34,7 +34,7 @@ def new_game(difficulty, lang):
 
     else:
 
-        with open(f"languages/{LANGS_DICT[lang]}.json", "r") as f:
+        with open(f"languages/{LANGS_DICT[lang]}.json", "r", encoding='utf-8') as f:
             
             words = json.load(f)
             word = random.choice(words).lower()
@@ -83,7 +83,7 @@ def main():
 
                         else:
 
-                            guessed_phrase += f"{char} "
+                            guessed_phrase += f"{char}"
 
                     if "-" not in guessed_phrase  and "+" not in guessed_phrase:
 
